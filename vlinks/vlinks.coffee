@@ -10,9 +10,6 @@ if Meteor.isClient
   Template.body.helpers
     videos: ->
       Videos.find {}
-    files: ->
-      console.log("find")
-      Files.find {}
 
   Template.body.events
 
@@ -32,7 +29,35 @@ if Meteor.isServer
   Meteor.publish "videos", -> Videos.find {}
 
   Files.allow
-    insert: () -> true
-    update: () -> true
-    download: () -> true
+    insert: -> true
+    update: -> true
+
+
+  processFiles = ->
+    console.log "process files"
+    file = Files.findOne()
+    if file
+    #for file in Files.find().fetch()
+      console.log "here"
+      buffer = new Buffer 0
+      readStream = file.createReadStream()
+      readStream.on "data", (chunk) ->
+        buffer = Buffer.concat [buffer, chunk]
+        console.log "add chunk"
+      readStream.on "end", Meteor.bindEnvironment ->
+        console.log "end"
+        HTTP.post "https://api.streamable.com/upload",
+        {
+          data: buffer
+          auth: "sonnbc:123123"
+          headers:
+            "Content-Type": "multipart/form-data"
+        },
+        (error, result) ->
+          console.log error, result
+
+
+
+  #Meteor.setInterval processFiles, 30000
+  processFiles()
 

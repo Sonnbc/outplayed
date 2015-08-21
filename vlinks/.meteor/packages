@@ -9,3 +9,5 @@ coffeescript
 dbarrett:dropzonejs
 cfs:standard-packages
 cfs:gridfs
+cfs:power-queue
+http

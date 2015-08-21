@@ -11,17 +11,10 @@
     {{> video}}
   {{/each}}
 
-  {{#each files}}
-    {{> file}}
-  {{/each}}
 </body>
 
 <template name="video">
   <li>Title: {{title}} <a href={{link}}>Link</a></li>
-</template>
-
-<template name="file">
-  <li>{{this}}</li>
 </template>
 
 <template name="upload">
