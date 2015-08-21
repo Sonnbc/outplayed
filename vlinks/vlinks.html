@@ -1,0 +1,30 @@
+<head>
+  <title>vlinks</title>
+</head>
+
+<body>
+  <h1>Video list</h1>
+
+  {{> upload}}
+
+  {{#each videos}}
+    {{> video}}
+  {{/each}}
+
+  {{#each files}}
+    {{> file}}
+  {{/each}}
+</body>
+
+<template name="video">
+  <li>Title: {{title}} <a href={{link}}>Link</a></li>
+</template>
+
+<template name="file">
+  <li>{{this}}</li>
+</template>
+
+<template name="upload">
+  <form action="/upload" class="dropzone" id="dropzone"></form>
+</template>
+
